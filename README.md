@@ -109,7 +109,7 @@ La documentación interactiva de esta API está en **GET** `/api-docs` (Swagger 
    - `ADMIN_USER`, `ADMIN_PASSWORD` (usuario y contraseña del dashboard).
    - `SESSION_SECRET` (una frase o string aleatorio).
    - No hace falta definir `PORT`; Render la asigna.
-6. **Create Web Service**. Cuando termine el deploy, tu API quedará en una URL tipo `https://project-break-backend.onrender.com`.
+6. **Create Web Service**. Cuando termine el deploy, tu API quedará en una URL tipo `https://creus.onrender.com`.
 
 **Nota:** En plan gratuito el servicio se “duerme” tras inactividad; la primera petición puede tardar unos segundos en responder.
 
