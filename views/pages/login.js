@@ -10,7 +10,7 @@ function loginPage(errorMsg) {
     '<form action="/login" method="POST">' +
     '<label for="user">Usuario</label><input type="text" id="user" name="user" required autocomplete="username">' +
     '<label for="password">Contraseña</label><input type="password" id="password" name="password" required autocomplete="current-password">' +
-    '<button type="submit">Entrar</button></form></main></body></html>';
+    '<button type="submit">Entrar</button></form></main>' + layout.close();
 }
 
 module.exports = loginPage;

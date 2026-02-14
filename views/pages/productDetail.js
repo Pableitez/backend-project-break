@@ -4,7 +4,7 @@ const productDetail = require('../partials/productDetail');
 
 function productDetailPage(data) {
   return layout(data.product.name) + navbar(false) +
-    '<main>' + productDetail(data.product, false) + '</main></body></html>';
+    '<main>' + productDetail(data.product, false) + '</main>' + layout.close();
 }
 
 module.exports = productDetailPage;

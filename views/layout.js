@@ -1,3 +1,5 @@
+const footer = require('./partials/footer');
+
 function layout(title) {
   if (!title) title = 'Creus';
   return '<!DOCTYPE html><html lang="es"><head>' +
@@ -11,4 +13,9 @@ function layout(title) {
     '</head><body>';
 }
 
+function close() {
+  return footer() + '</body></html>';
+}
+
 module.exports = layout;
+module.exports.close = close;

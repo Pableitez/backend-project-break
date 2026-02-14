@@ -5,11 +5,11 @@ const connectDB = async () => {
   if (uri.startsWith('"') && uri.endsWith('"')) uri = uri.slice(1, -1).trim();
   if (uri.startsWith("'") && uri.endsWith("'")) uri = uri.slice(1, -1).trim();
   if (!uri) {
-    console.error('Falta MONGO_URI. En Render: Environment → MONGO_URI con tu URI de Atlas (mongodb+srv://...)');
+    console.error('Falta MONGO_URI');
     process.exit(1);
   }
   if (!uri.startsWith('mongodb://') && !uri.startsWith('mongodb+srv://')) {
-    console.error('MONGO_URI debe empezar por mongodb:// o mongodb+srv://. Revisa la variable en Render (sin comillas ni espacios).');
+    console.error('MONGO_URI no válida');
     process.exit(1);
   }
   if (uri.includes('mongodb.net') && !uri.includes('authSource=')) {

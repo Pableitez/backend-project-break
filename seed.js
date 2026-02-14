@@ -238,8 +238,13 @@ const EXCLUSIVE_DESCRIPTIONS = [
   'Resto de un gesto infinito.'
 ];
 
-function luxuryPrice(i) {
-  return 247 + 7 * i + (i % 13);
+function randomLuxuryPrice() {
+  const min = 89;
+  const max = 489;
+  const base = min + Math.random() * (max - min);
+  const endings = [0.95, 0.99, 0.50, 0.00];
+  const end = endings[Math.floor(Math.random() * endings.length)];
+  return Math.floor(base) + end;
 }
 
 async function seed() {
@@ -273,7 +278,7 @@ async function seed() {
       designer: designerEnum[i % designerEnum.length],
       category: categoryEnum[i % categoryEnum.length],
       size: sizeEnum[i % sizeEnum.length],
-      price: luxuryPrice(i)
+      price: randomLuxuryPrice()
     }));
 
     let uri = process.env.MONGO_URI.trim().replace(/\r/g, '');

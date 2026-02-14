@@ -13,7 +13,7 @@ function productsList(data) {
   });
   return layout('Colección') + navbar(false) +
     '<main class="collection">' + toolbarHtml + '<h1>' + data.title + '</h1>' +
-    productCards(data.products, false) + '</main></body></html>';
+    productCards(data.products, false) + '</main>' + layout.close();
 }
 
 module.exports = productsList;

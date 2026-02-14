@@ -23,6 +23,7 @@ app.use(express.static('public'));
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/', authRoutes);
+app.use('/', legalRoutes);
 app.use('/api/products', productApiRoutes);
 app.use('/', productRoutes);
 

@@ -12,7 +12,7 @@ function dashboardPage(data) {
   });
   return layout('Dashboard') + navbar(true) +
     '<main>' + flash(data.msg) + '<h1>Dashboard — Colección</h1>' + toolbarHtml +
-    productCards(data.products, true) + '</main></body></html>';
+    productCards(data.products, true) + '</main>' + layout.close();
 }
 
 module.exports = dashboardPage;

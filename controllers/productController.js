@@ -5,6 +5,7 @@ const dashboardPage = require('../views/pages/dashboard');
 const dashboardProductDetailPage = require('../views/pages/dashboardProductDetail');
 const newProductPage = require('../views/pages/newProduct');
 const editProductPage = require('../views/pages/editProduct');
+const legalPage = require('../views/pages/legal');
 
 function getSort(sort) {
   if (sort === 'price_asc') return { price: 1 };
