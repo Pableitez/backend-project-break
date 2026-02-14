@@ -7,6 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./config/swagger');
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
+const legalRoutes = require('./routes/legalRoutes');
 const productApiRoutes = require('./routes/api/productRoutes');
 
 const app = express();
