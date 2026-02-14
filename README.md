@@ -141,11 +141,11 @@ Rutas que devuelven páginas HTML para la tienda y el dashboard.
 
 ### API REST (JSON)
 
-Base de la API: **`/api/products`**. Las respuestas son JSON para ser consumidas por aplicaciones frontend.
+Base de la API: **`/api/products`**. Mismas operaciones que el controlador de productos (vistas), con respuestas en JSON para consumo desde frontend.
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| GET | `/api/products` | Listar todos los productos |
+| GET | `/api/products` | Listar productos. Query opcionales: `designer`, `category`, `search`, `sort` (`price_asc`, `price_desc`, `name_asc`, `name_desc`) |
 | GET | `/api/products/:id` | Obtener un producto por ID |
 | POST | `/api/products` | Crear producto (body en JSON) |
 | PUT | `/api/products/:id` | Actualizar producto (body en JSON) |
