@@ -90,6 +90,29 @@ Base: `/api/products`
 
 La documentación interactiva de esta API está en **GET** `/api-docs` (Swagger UI).
 
+## Despliegue en Render
+
+1. Entra en [render.com](https://render.com) e inicia sesión con GitHub.
+2. **Dashboard** → **New** → **Web Service**.
+3. Conecta el repositorio **Pableitez/backend-project-break** (autoriza a Render si hace falta).
+4. Configuración:
+   - **Name:** project-break-backend (o el que quieras).
+   - **Region:** Frankfurt (o la más cercana).
+   - **Branch:** main.
+   - **Runtime:** Node.
+   - **Build Command:** `npm install`.
+   - **Start Command:** `npm start`.
+   - **Plan:** Free.
+5. **Environment** → añade las variables (las que tienen valor secreto márcalas como **Secret**):
+   - `MONGO_URI` (tu URI de Atlas).
+   - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
+   - `ADMIN_USER`, `ADMIN_PASSWORD` (usuario y contraseña del dashboard).
+   - `SESSION_SECRET` (una frase o string aleatorio).
+   - No hace falta definir `PORT`; Render la asigna.
+6. **Create Web Service**. Cuando termine el deploy, tu API quedará en una URL tipo `https://project-break-backend.onrender.com`.
+
+**Nota:** En plan gratuito el servicio se “duerme” tras inactividad; la primera petición puede tardar unos segundos en responder.
+
 ## Entrega del proyecto
 
 - **URL del repositorio:** https://github.com/Pableitez/backend-project-break  

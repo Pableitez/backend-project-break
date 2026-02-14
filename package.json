@@ -4,7 +4,7 @@
   "description": "Tienda de ropa - API y dashboard con catálogo de productos (MongoDB, Express)",
   "main": "index.js",
   "scripts": {
-    "start": "node --watch index.js",
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "fetch-images": "node scripts/fetch-unsplash-images.js",
     "test": "jest --forceExit"
