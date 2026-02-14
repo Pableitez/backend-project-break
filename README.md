@@ -1,88 +1,135 @@
-# Tienda de ropa
+# Creus — Backend API y tienda
 
-Tienda de ropa con catálogo de productos y dashboard para el administrador. Los productos se guardan en MongoDB Atlas. Incluye vistas HTML (tienda y dashboard) y API REST en JSON para usar con frontend (p. ej. React).
+Documentación del backend del proyecto **Creus**, una tienda de ropa con catálogo de productos, dashboard de administración y API REST para consumo por frontend (por ejemplo React).
 
-El enunciado proponía helpers (`baseHtml`, `getNavBar`, `getProductCards`); aquí esa lógica está en la carpeta `views/` (layout, partials y páginas). He personalizado el proyecto con la marca Creus, filtros por colección y un footer con enlaces a Política de cookies, Aviso legal y Privacidad.
+## Descripción del proyecto
 
-## Cómo poner en marcha la aplicación
+La tienda de ropa se ha bautizado con el nombre **Creus**. La aplicación ofrece:
 
-1. Clonar el repositorio e instalar dependencias:
-   ```bash
-   npm install
-   ```
+- **Vistas HTML**: tienda pública con listado y detalle de productos, y un dashboard protegido para el administrador (crear, editar y eliminar productos).
+- **API REST en JSON**: endpoints bajo `/api/products` para listar, crear, actualizar y eliminar productos, pensados para integrar con un frontend en React u otra SPA.
+- **Autenticación**: login con usuario y contraseña (configurados por variables de entorno) y sesión con `express-session` para acceder al dashboard.
+- **Páginas legales**: Política de cookies, Aviso legal y Privacidad, enlazadas desde el footer.
 
-2. Crear el archivo `.env` en la raíz con las variables necesarias:
-   ```
-   MONGO_URI=<uri_de_tu_base_de_datos_atlas>
-   PORT=3000
-   CLOUDINARY_CLOUD_NAME=<tu_cloud_name>
-   CLOUDINARY_API_KEY=<tu_api_key>
-   CLOUDINARY_API_SECRET=<tu_api_secret>
-   ADMIN_USER=<usuario_admin>
-   ADMIN_PASSWORD=<contraseña_admin>
-   SESSION_SECRET=<clave_secreta_para_la_sesión>
-   ```
+Los productos se almacenan en **MongoDB Atlas** y las imágenes se suben a **Cloudinary**. El código de vistas (layout, partials y páginas) está organizado en la carpeta `views/`, en lugar de helpers genéricos, y el proyecto está personalizado con la marca Creus y filtros por colección.
 
-3. En MongoDB Atlas: **Network Access** → añadir IP `0.0.0.0/0` para permitir conexiones.
+---
 
-4. Arrancar el servidor:
-   ```bash
-   npm start
-   ```
-   O en modo desarrollo con nodemon:
-   ```bash
-   npm run dev
-   ```
+## Cómo se pone en marcha la aplicación
 
-5. Abrir en el navegador: `http://localhost:3000` (o el `PORT` que hayas puesto en `.env`).
+La aplicación se ejecuta con Node.js y requiere una base de datos MongoDB (Atlas) y una cuenta de Cloudinary para las imágenes.
 
-Opcional: para cargar productos desde las imágenes de tu cuenta de Cloudinary, ejecuta `npm run seed`.
+### Requisitos previos
 
-- **Tienda (público):** `/products`  
-- **Dashboard (admin):** `/dashboard` (requiere login en `/login`)  
-- **Documentación API (Swagger):** `/api-docs`
+- Node.js instalado.
+- Cuenta en MongoDB Atlas y en Cloudinary.
+- Archivo `.env` en la raíz del proyecto (no se incluye en el repositorio por seguridad).
+
+### Variables de entorno
+
+En la raíz del proyecto debe existir un archivo `.env` con las siguientes variables:
+
+| Variable | Descripción |
+|----------|-------------|
+| `MONGO_URI` | URI de conexión a la base de datos MongoDB Atlas |
+| `PORT` | Puerto en el que escucha el servidor (ej. `3000`) |
+| `CLOUDINARY_CLOUD_NAME` | Nombre de la nube en Cloudinary |
+| `CLOUDINARY_API_KEY` | API Key de Cloudinary |
+| `CLOUDINARY_API_SECRET` | API Secret de Cloudinary |
+| `ADMIN_USER` | Usuario para el login del dashboard |
+| `ADMIN_PASSWORD` | Contraseña del usuario del dashboard |
+| `SESSION_SECRET` | Clave secreta para firmar la sesión |
+
+En MongoDB Atlas es necesario permitir conexiones desde cualquier IP en **Network Access** (por ejemplo `0.0.0.0/0`) para que el servidor pueda conectarse.
+
+### Instalación y ejecución
+
+Tras clonar el repositorio, se instalan las dependencias con `npm install`. El servidor se inicia con:
+
+```bash
+npm start
+```
+
+En desarrollo puede usarse `npm run dev` (nodemon) para que se reinicie al cambiar el código.
+
+Con el servidor en marcha, la aplicación queda disponible en `http://localhost:3000` (o en el puerto definido en `PORT`).
+
+### Carga inicial de datos (opcional)
+
+El proyecto incluye un script de seed que crea productos de ejemplo usando imágenes de la cuenta de Cloudinary configurada. Se ejecuta con:
+
+```bash
+npm run seed
+```
+
+### Rutas principales de la aplicación
+
+- **Tienda (público):** `/products` — listado y detalle de productos.
+- **Dashboard (admin):** `/dashboard` — gestión de productos; requiere haber iniciado sesión en `/login`.
+- **Documentación de la API:** `/api-docs` — interfaz Swagger con todos los endpoints de la API.
+
+---
+
+## Tecnologías utilizadas
+
+| Tecnología | Uso en el proyecto |
+|------------|--------------------|
+| **Node.js** y **Express** | Servidor HTTP, rutas y middlewares |
+| **Mongoose** | Modelos y conexión a MongoDB |
+| **MongoDB Atlas** | Base de datos en la nube |
+| **dotenv** | Carga de variables de entorno desde `.env` |
+| **express.urlencoded** y **express.json** | Parseo del body en peticiones POST/PUT |
+| **method-override** | Soporte de PUT y DELETE en formularios HTML mediante `_method` |
+| **Cloudinary**, **multer**, **multer-storage-cloudinary** | Subida y almacenamiento de imágenes |
+| **express-session** | Sesión de usuario y login del dashboard |
+| **swagger-ui-express** | Documentación interactiva de la API en `/api-docs` |
+| **Jest** y **Supertest** | Tests automatizados del controlador de productos (`npm test`) |
+
+---
 
 ## Estructura del repositorio
 
-`config/` (db, cloudinary, swagger) · `controllers/` (productController, authController, legalController, api) · `models/` (Product) · `routes/` (productRoutes, authRoutes, legalRoutes, api) · `middlewares/` (auth, upload Cloudinary) · `views/` (layout, partials, páginas) · `test/` (Jest) · `app.js`, `index.js`, `seed.js`
+```
+config/       → Conexión a BD (db), configuración de Cloudinary y Swagger
+controllers/  → productController, authController, legalController, controlador de la API
+models/       → Modelo Product (Mongoose)
+routes/       → productRoutes, authRoutes, legalRoutes, rutas de la API
+middlewares/  → Autenticación (protección del dashboard), subida a Cloudinary
+views/        → Layout, partials y páginas (tienda y dashboard)
+test/         → Tests con Jest
+app.js        → Configuración de Express y rutas
+index.js      → Arranque del servidor
+seed.js       → Script de carga inicial de productos
+```
 
-## Tecnologías usadas
+---
 
-- **Node.js** + **Express** — servidor y rutas
-- **Mongoose** — conexión y modelos con MongoDB
-- **MongoDB Atlas** — base de datos
-- **dotenv** — variables de entorno (MONGO_URI, PORT, Cloudinary, admin, sesión)
-- **express.urlencoded** y **express.json** — lectura del body de las peticiones
-- **method-override** — uso de PUT y DELETE en formularios mediante `_method`
-- **Cloudinary** + **multer** + **multer-storage-cloudinary** — subida de imágenes
-- **express-session** — sesión y login para el dashboard
-- **swagger-ui-express** — documentación de la API en `/api-docs`
-- **Jest** + **Supertest** — tests (script: `npm test`)
+## Documentación de la API
 
-## Endpoints
+### Endpoints de vistas (HTML)
 
-### Vistas HTML (tienda y dashboard)
+Rutas que devuelven páginas HTML para la tienda y el dashboard.
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| GET | `/products` | Listado de productos (cada uno con enlace al detalle) |
+| GET | `/products` | Listado de productos con enlaces al detalle |
 | GET | `/products/:productId` | Detalle de un producto |
-| GET | `/dashboard` | Dashboard del administrador (listado de productos). Requiere login |
+| GET | `/dashboard` | Dashboard del administrador (listado). Requiere login |
 | GET | `/dashboard/new` | Formulario para crear un producto. Requiere login |
 | POST | `/dashboard` | Crear producto. Requiere login |
 | GET | `/dashboard/:productId` | Detalle de un producto en el dashboard. Requiere login |
 | GET | `/dashboard/:productId/edit` | Formulario para editar un producto. Requiere login |
 | PUT | `/dashboard/:productId` | Actualizar producto. Requiere login |
 | DELETE | `/dashboard/:productId/delete` | Eliminar producto. Requiere login |
-| POST | `/dashboard/:productId/delete` | Eliminar producto (desde formulario). Requiere login |
+| POST | `/dashboard/:productId/delete` | Eliminar producto desde formulario. Requiere login |
 
-### Login / logout
+### Login y sesión
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| GET | `/login` | Formulario de login |
-| POST | `/login` | Iniciar sesión (usuario y contraseña en .env) |
-| GET / POST | `/logout` | Cerrar sesión |
+| GET | `/login` | Formulario de inicio de sesión |
+| POST | `/login` | Inicio de sesión (usuario y contraseña según `.env`) |
+| GET / POST | `/logout` | Cierre de sesión |
 
 ### Páginas legales (footer)
 
@@ -90,49 +137,42 @@ Opcional: para cargar productos desde las imágenes de tu cuenta de Cloudinary, 
 |--------|------|-------------|
 | GET | `/cookies` | Política de cookies |
 | GET | `/aviso-legal` | Aviso legal |
-| GET | `/privacidad` | Privacidad |
+| GET | `/privacidad` | Política de privacidad |
 
-### API REST (JSON, para frontend React)
+### API REST (JSON)
 
-Base: `/api/products`
+Base de la API: **`/api/products`**. Las respuestas son JSON y están pensadas para ser consumidas por un frontend (p. ej. React).
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
 | GET | `/api/products` | Listar todos los productos |
 | GET | `/api/products/:id` | Obtener un producto por ID |
-| POST | `/api/products` | Crear producto (body JSON) |
-| PUT | `/api/products/:id` | Actualizar producto (body JSON) |
+| POST | `/api/products` | Crear producto (body en JSON) |
+| PUT | `/api/products/:id` | Actualizar producto (body en JSON) |
 | DELETE | `/api/products/:id` | Eliminar producto |
 
-La documentación interactiva de esta API está en **GET** `/api-docs` (Swagger UI).
+La documentación interactiva (Swagger UI) está disponible en **GET** `/api-docs`, donde se pueden probar todos los endpoints de la API.
 
-## Despliegue en Render
+---
 
-1. Entra en [render.com](https://render.com) e inicia sesión con GitHub.
-2. **Dashboard** → **New** → **Web Service**.
-3. Conecta el repositorio **Pableitez/backend-project-break** (autoriza a Render si hace falta).
-4. Configuración:
-   - **Name:** project-break-backend (o el que quieras).
-   - **Region:** Frankfurt (o la más cercana).
-   - **Branch:** main.
-   - **Runtime:** Node.
-   - **Build Command:** `npm install`.
-   - **Start Command:** `npm start`.
-   - **Plan:** Free.
-5. **Environment** → añade las variables (las que tienen valor secreto márcalas como **Secret**):
-   - `MONGO_URI` (tu URI de Atlas).
-   - `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`.
-   - `ADMIN_USER`, `ADMIN_PASSWORD` (usuario y contraseña del dashboard).
-   - `SESSION_SECRET` (una frase o string aleatorio).
-   - No hace falta definir `PORT`; Render la asigna.
-6. **Create Web Service**. Cuando termine el deploy, tu API quedará en una URL tipo `https://creus.onrender.com`.
+## Despliegue
 
-**Nota:** En plan gratuito el servicio se “duerme” tras inactividad; la primera petición puede tardar unos segundos en responder.
+El proyecto está desplegado en **Render** como Web Service. La configuración utilizada es:
+
+- **Runtime:** Node.js  
+- **Build command:** `npm install`  
+- **Start command:** `npm start`  
+- **Variables de entorno:** las mismas que en desarrollo (`MONGO_URI`, `CLOUDINARY_*`, `ADMIN_USER`, `ADMIN_PASSWORD`, `SESSION_SECRET`). Render asigna automáticamente `PORT`.
+
+En el plan gratuito de Render el servicio se suspende tras un periodo de inactividad; la primera petición tras ese periodo puede tardar unos segundos en responder.
+
+---
 
 ## Entrega del proyecto
 
-- **URL del repositorio:** https://github.com/Pableitez/backend-project-break  
-- **URL de producción:** (añadir cuando esté desplegado en Render u otro)  
-- **Variables de entorno a configurar en producción:** MONGO_URI, PORT, CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, ADMIN_USER, ADMIN_PASSWORD, SESSION_SECRET  
+- **Repositorio:** https://github.com/Pableitez/backend-project-break  
+- **URL de producción:** https://creus.onrender.com  
+- **Acceso al dashboard (evaluación):** usuario `pablo`, contraseña `1234`. Login en https://creus.onrender.com/login  
+- **Variables de entorno en producción:** MONGO_URI, CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET, ADMIN_USER, ADMIN_PASSWORD, SESSION_SECRET  
 
-Recuerda tener la IP abierta en Atlas: **Network Access** → IP Address **0.0.0.0/0**.
+Para que la aplicación en producción pueda conectar con la base de datos, en MongoDB Atlas debe estar permitido el acceso desde cualquier IP (**Network Access** → `0.0.0.0/0`).
