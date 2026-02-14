@@ -36,9 +36,15 @@ El enunciado proponía helpers (`baseHtml`, `getNavBar`, `getProductCards`); aqu
 
 5. Abrir en el navegador: `http://localhost:3000` (o el `PORT` que hayas puesto en `.env`).
 
+Opcional: para cargar productos desde las imágenes de tu cuenta de Cloudinary, ejecuta `npm run seed`.
+
 - **Tienda (público):** `/products`  
 - **Dashboard (admin):** `/dashboard` (requiere login en `/login`)  
 - **Documentación API (Swagger):** `/api-docs`
+
+## Estructura del repositorio
+
+`config/` (db, cloudinary, swagger) · `controllers/` (productController, authController, legalController, api) · `models/` (Product) · `routes/` (productRoutes, authRoutes, legalRoutes, api) · `middlewares/` (auth, upload Cloudinary) · `views/` (layout, partials, páginas) · `test/` (Jest) · `app.js`, `index.js`, `seed.js`
 
 ## Tecnologías usadas
 
@@ -77,6 +83,14 @@ El enunciado proponía helpers (`baseHtml`, `getNavBar`, `getProductCards`); aqu
 | GET | `/login` | Formulario de login |
 | POST | `/login` | Iniciar sesión (usuario y contraseña en .env) |
 | GET / POST | `/logout` | Cerrar sesión |
+
+### Páginas legales (footer)
+
+| Método | Ruta | Descripción |
+|--------|------|-------------|
+| GET | `/cookies` | Política de cookies |
+| GET | `/aviso-legal` | Aviso legal |
+| GET | `/privacidad` | Privacidad |
 
 ### API REST (JSON, para frontend React)
 
