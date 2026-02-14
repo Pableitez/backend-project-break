@@ -1,13 +1,13 @@
 # Creus — Backend API y tienda
 
-Documentación del backend del proyecto **Creus**, una tienda de ropa con catálogo de productos, dashboard de administración y API REST para consumo por frontend (por ejemplo React).
+Documentación del backend del proyecto **Creus**, una tienda de ropa con catálogo de productos, dashboard de administración y API REST en JSON para consumo desde aplicaciones frontend.
 
 ## Descripción del proyecto
 
 La tienda de ropa se ha bautizado con el nombre **Creus**. La aplicación ofrece:
 
 - **Vistas HTML**: tienda pública con listado y detalle de productos, y un dashboard protegido para el administrador (crear, editar y eliminar productos).
-- **API REST en JSON**: endpoints bajo `/api/products` para listar, crear, actualizar y eliminar productos, pensados para integrar con un frontend en React u otra SPA.
+- **API REST en JSON**: endpoints bajo `/api/products` para listar, crear, actualizar y eliminar productos, para integrar con aplicaciones frontend (SPA).
 - **Autenticación**: login con usuario y contraseña (configurados por variables de entorno) y sesión con `express-session` para acceder al dashboard.
 - **Páginas legales**: Política de cookies, Aviso legal y Privacidad, enlazadas desde el footer.
 
@@ -32,7 +32,7 @@ En la raíz del proyecto debe existir un archivo `.env` con las siguientes varia
 | Variable | Descripción |
 |----------|-------------|
 | `MONGO_URI` | URI de conexión a la base de datos MongoDB Atlas |
-| `PORT` | Puerto en el que escucha el servidor (ej. `3000`) |
+| `PORT` | Puerto en el que escucha el servidor (`3000` por defecto) |
 | `CLOUDINARY_CLOUD_NAME` | Nombre de la nube en Cloudinary |
 | `CLOUDINARY_API_KEY` | API Key de Cloudinary |
 | `CLOUDINARY_API_SECRET` | API Secret de Cloudinary |
@@ -40,7 +40,7 @@ En la raíz del proyecto debe existir un archivo `.env` con las siguientes varia
 | `ADMIN_PASSWORD` | Contraseña del usuario del dashboard |
 | `SESSION_SECRET` | Clave secreta para firmar la sesión |
 
-En MongoDB Atlas es necesario permitir conexiones desde cualquier IP en **Network Access** (por ejemplo `0.0.0.0/0`) para que el servidor pueda conectarse.
+En MongoDB Atlas es necesario permitir conexiones desde cualquier IP en **Network Access** (`0.0.0.0/0`) para que el servidor pueda conectarse.
 
 ### Instalación y ejecución
 
@@ -141,7 +141,7 @@ Rutas que devuelven páginas HTML para la tienda y el dashboard.
 
 ### API REST (JSON)
 
-Base de la API: **`/api/products`**. Las respuestas son JSON y están pensadas para ser consumidas por un frontend (p. ej. React).
+Base de la API: **`/api/products`**. Las respuestas son JSON para ser consumidas por aplicaciones frontend.
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
