@@ -2,6 +2,8 @@
 
 Tienda de ropa con catálogo de productos y dashboard para el administrador. Los productos se guardan en MongoDB Atlas. Incluye vistas HTML (tienda y dashboard) y API REST en JSON para usar con frontend (p. ej. React).
 
+El enunciado proponía helpers (`baseHtml`, `getNavBar`, `getProductCards`); aquí esa lógica está en la carpeta `views/` (layout, partials y páginas). He personalizado el proyecto con la marca Creus, filtros por colección y un footer con enlaces a Política de cookies, Aviso legal y Privacidad.
+
 ## Cómo poner en marcha la aplicación
 
 1. Clonar el repositorio e instalar dependencias:
