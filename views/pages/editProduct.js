@@ -3,7 +3,8 @@ const navbar = require('../partials/navbar');
 const productForm = require('../partials/productForm');
 
 function editProductPage(data) {
-  const formHtml = productForm(data.product, '/dashboard/' + data.product._id, 'Guardar cambios');
+  const productId = data.product._id ? String(data.product._id) : '';
+  const formHtml = productForm(data.product, '/dashboard/' + productId, 'Guardar cambios');
   return layout('Editar: ' + data.product.name) + navbar(true) +
     '<main><h1>Editar producto</h1>' + formHtml + '</main>' + layout.close();
 }

@@ -149,7 +149,14 @@ const updateProduct = async (req, res) => {
     } else if (req.body.imageUrl !== undefined) {
       update.image = req.body.imageUrl;
     }
-    await Product.findByIdAndUpdate(req.params.productId, update);
+    const product = await Product.findByIdAndUpdate(
+      req.params.productId,
+      update,
+      { new: true, runValidators: true }
+    );
+    if (!product) {
+      return res.status(404).send('Producto no encontrado');
+    }
     res.redirect('/dashboard/' + req.params.productId + '?msg=updated');
   } catch (err) {
     res.status(400).send('Error al actualizar: ' + err.message);

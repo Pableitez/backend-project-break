@@ -5,7 +5,7 @@ module.exports = {
     version: '1.0.0',
     description: 'API REST de productos para uso con frontend (ej. React). Mismas operaciones que el dashboard en formato JSON.'
   },
-  servers: [{ url: 'http://localhost:3000', description: 'Servidor local' }],
+  servers: [{ url: `http://localhost:${process.env.PORT || 3000}`, description: 'Servidor local' }],
   paths: {
     '/api/products': {
       get: {
@@ -30,11 +30,29 @@ module.exports = {
                 properties: {
                   name: { type: 'string' },
                   description: { type: 'string' },
-                  image: { type: 'string' },
-                  designer: { type: 'string' },
-                  category: { type: 'string' },
-                  size: { type: 'string' },
-                  price: { type: 'number' }
+                  image: { type: 'string', description: 'URL de imagen (opcional)' },
+                  designer: {
+                    type: 'string',
+                    enum: ['Puig de Paní', 'Serra de Rodes', 'Port Lligat', 'Cala Nans', 'Es Sortell', 'Cap de Creus']
+                  },
+                  category: {
+                    type: 'string',
+                    enum: ['Camisetas', 'Pantalones', 'Zapatos', 'Accesorios']
+                  },
+                  size: {
+                    type: 'string',
+                    enum: ['XS', 'S', 'M', 'L', 'XL']
+                  },
+                  price: { type: 'number', minimum: 0 }
+                },
+                example: {
+                  name: 'Camiseta básica',
+                  description: 'Algodón orgánico',
+                  image: '',
+                  designer: 'Puig de Paní',
+                  category: 'Camisetas',
+                  size: 'M',
+                  price: 29.99
                 }
               }
             }
@@ -61,10 +79,19 @@ module.exports = {
                   name: { type: 'string' },
                   description: { type: 'string' },
                   image: { type: 'string' },
-                  designer: { type: 'string' },
-                  category: { type: 'string' },
-                  size: { type: 'string' },
-                  price: { type: 'number' }
+                  designer: {
+                    type: 'string',
+                    enum: ['Puig de Paní', 'Serra de Rodes', 'Port Lligat', 'Cala Nans', 'Es Sortell', 'Cap de Creus']
+                  },
+                  category: {
+                    type: 'string',
+                    enum: ['Camisetas', 'Pantalones', 'Zapatos', 'Accesorios']
+                  },
+                  size: {
+                    type: 'string',
+                    enum: ['XS', 'S', 'M', 'L', 'XL']
+                  },
+                  price: { type: 'number', minimum: 0 }
                 }
               }
             }
